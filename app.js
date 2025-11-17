@@ -2,6 +2,7 @@ const express = require('express')
 require('dotenv').config()
 
 const app = express()
+app.use(express.json())
 
 const courses = [
   { id: 1, name: 'course1' },
@@ -26,6 +27,15 @@ app.get('/api/courses/:id', (req, res) => {
 app.get('/api/posts/:year/:month', (req, res) => {
   res.send({ params: req.params, query: req.query })
 })
+
+app.post('/api/courses', (req, res) => {
+  const course = {
+    id: courses.length + 1,
+    name: req.body.name,
+  }
+  courses.push(course)
+  res.send(course)
+}) 
 
 
 const port = process.env.PORT || 3000
